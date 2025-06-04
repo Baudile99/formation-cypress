@@ -1,0 +1,16 @@
+{
+  "name": "formation-cypress",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "cypress:record" : "npx cypress run --record --key db9c5a14-3a12-44d7-8ba5-aca987f418f0",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^14.3.3"
+  }
+}
