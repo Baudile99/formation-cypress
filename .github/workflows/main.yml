@@ -1,20 +1,42 @@
+# Nom du workflow (affiché dans l'onglet "Actions" de GitHub)
 name: cypress formation with github actions
 
+# Déclenche le workflow à chaque push sur n'importe quelle branche
 on:
   push:
 
 jobs:
+  # Nom du job (il peut y en avoir plusieurs dans un même workflow)
   cypress-run:
+    # Spécifie que le job doit s'exécuter sur un environnement Windows
     runs-on: windows-latest
 
+    # Définition d'une matrice de parallélisation avec 3 "containers"
+    # Cela permet d'exécuter les tests en parallèle sur 3 machines virtuelles différentes
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
+
     steps:
+      # Étape 1 : Récupère le code source du dépôt
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Étape 2 : Lance les tests Cypress en utilisant l'action officielle
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          # Utilise le navigateur Chrome pour l’exécution des tests
           browser: chrome
+          
+          # Active l’enregistrement des résultats sur le Cypress Dashboard
           record: true
+          
+          # Active l’exécution des tests en parallèle (nécessite `record: true`)
+          parallel: true
+
         env:
+          # Fournit la clé secrète d’enregistrement pour le Dashboard Cypress
+          # Cette clé doit être définie dans les secrets GitHub (Settings > Secrets)
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
