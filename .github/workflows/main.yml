@@ -1,6 +1,6 @@
 name: cypress formation with github actions
 
-on: 
+on:
   push:
 
 jobs:
@@ -13,6 +13,8 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
-
         with:
           browser: chrome
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{CYPRESS_RECORD_KEY}}
